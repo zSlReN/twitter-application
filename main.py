@@ -57,7 +57,7 @@ if __name__ == '__main__':
 		key,
 		secret_key,
 		token,
-		secret_key
+		secret_token
 	)
 
 	loop = asyncio.get_event_loop()
