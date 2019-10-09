@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 from logger import Logger
 
 
-target_date = datetime.datetime(2019, 10, 4, 15)
+target_date = datetime.datetime(2019, 10, 11, 15)
 
 
 class Twittermanager:
@@ -34,14 +34,15 @@ class Twittermanager:
 			try:
 				now = datetime.datetime.now()
 				if now > target_date:
-					exit('Target datetime archieved.')				
+					self.twitter_api.UpdateProfile(name='［ZEAL］あてしあ！')
+					exit(0)
 
 				timedelta = target_date - now
 				temp = timedelta.strftime('%H{0}%M{1}%S{2}%f{3}').format('時間', '分', '秒', 'マイクロ秒')
 				self.twitter_api.UpdateProfile(name=f'あてしあ！上場まで{temp}')
 				self.logger.info('Profile updated.')
 				self.date_on_twitter = now
-				await asyncio.sleep(math.pi)
+				await asyncio.sleep(math.pi * 4)
 			except Exception as e:
 				self.logger.critical(e)
 
