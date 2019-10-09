@@ -37,14 +37,14 @@ class Twittermanager:
 					self.twitter_api.UpdateProfile(name='［ZEAL］あてしあ！')
 					exit(0)
 
-				timedelta = target_date - now
-				temp = timedelta.strftime('%H{0}%M{1}%S{2}%f{3}').format('時間', '分', '秒', 'マイクロ秒')
-				self.twitter_api.UpdateProfile(name=f'あてしあ！上場まで{temp}')
+				delta = target_date - now
+				self.twitter_api.UpdateProfile(name=f'あてしあ！上場まで{delta.days}日{delta.seconds // (60 * 60)}時間{delta.seconds // 60 % 60}分{delta.seconds % 60}秒')
 				self.logger.info('Profile updated.')
 				self.date_on_twitter = now
-				await asyncio.sleep(math.pi * 4)
 			except Exception as e:
 				self.logger.critical(e)
+				
+			await asyncio.sleep(math.pi * 4)
 
 
 if __name__ == '__main__':
