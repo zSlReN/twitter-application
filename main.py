@@ -7,9 +7,9 @@ import random
 
 import twitter
 from dotenv import load_dotenv
-
 from logger import Logger
 
+tz = datetime.timezone(datetime.timedelta(hours=9))
 
 target_date = datetime.datetime(2020, 6, 16, 9, 30)
 
@@ -46,9 +46,9 @@ class Twittermanager:
 		self.logger.info('Starting twitter-manager.')
 		while 1:
 			try:
-				now = datetime.datetime.now()
+				now = datetime.datetime.now(tz=tz)
 				if now > target_date:
-					self.twitter_api.UpdateProfile(name='［ZEAL］しあ！')
+					self.twitter_api.UpdateProfile(name='しあ！')
 					exit(0)
 
 				delta = target_date - now
