@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 from logger import Logger
 
 
-target_date = datetime.datetime(2020, 2, 27, 0)
+target_date = datetime.datetime(2020, 6, 16, 9, 30)
 
 
 def twitter_setup():
@@ -52,7 +52,7 @@ class Twittermanager:
 					exit(0)
 
 				delta = target_date - now
-				self.twitter_api.UpdateProfile(name=f'しあ！課題締切まで{delta.days}日{delta.seconds // (60 * 60)}時間{delta.seconds // 60 % 60}分{delta.seconds % 60}秒')
+				self.twitter_api.UpdateProfile(name=f'しあ！ランク終了まで{delta.days}日{delta.seconds // (60 * 60)}時間{delta.seconds // 60 % 60}分{delta.seconds % 60}秒')
 				self.logger.info('Profile updated.')
 				self.date_on_twitter = now
 			except Exception as e:
