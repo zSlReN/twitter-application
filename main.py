@@ -11,7 +11,7 @@ from logger import Logger
 
 tz = datetime.timezone(datetime.timedelta(hours=9))
 
-target_date = datetime.datetime(2020, 6, 16, 9, 30)
+target_date = datetime.datetime(2020, 6, 16, 9, 30, tzinfo=tz)
 
 
 def twitter_setup():
