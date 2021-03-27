@@ -4,14 +4,21 @@ import json
 import math
 import os
 import random
+import docx
 
 import twitter
 from dotenv import load_dotenv
 from logger import Logger
 
 tz = datetime.timezone(datetime.timedelta(hours=9))
+docxpath = 'D:\sia\documents\Project\Project-Final-Report.docx'
 
-target_date = datetime.datetime(2020, 6, 16, 9, 30, tzinfo=tz)
+
+def word_count():
+	d = docx.Document(docxpath)
+	ps = d.paragraphs
+	count = sum(map(lambda p:len(p.text.split()), ps))
+	return count
 
 
 def twitter_setup():
@@ -39,26 +46,16 @@ class Twittermanager:
 		self.logger = Logger('Twittermanger') if logger is None else logger
 
 
-	async def start(self):
+	def tweet(self, l):
 		"""
 		Super super driver a super driver!
 		"""
-		self.logger.info('Starting twitter-manager.')
-		while 1:
-			try:
-				now = datetime.datetime.now(tz=tz)
-				if now > target_date:
-					self.twitter_api.UpdateProfile(name='しあ！')
-					exit(0)
-
-				delta = target_date - now
-				self.twitter_api.UpdateProfile(name=f'しあ！ランク終了まで{delta.days}日{delta.seconds // (60 * 60)}時間{delta.seconds // 60 % 60}分{delta.seconds % 60}秒')
-				self.logger.info('Profile updated.')
-				self.date_on_twitter = now
-			except Exception as e:
-				self.logger.critical(e)
-				
-			await asyncio.sleep(math.pi * 4)
+		try:
+			self.twitter_api.UpdateProfile(name=f'課題文字数{l}/15000')
+			self.logger.info('Profile updated.')
+		except Exception as e:
+			self.logger.critical(e)
+			
 
 
 if __name__ == '__main__':
@@ -71,15 +68,5 @@ if __name__ == '__main__':
 		secret_token
 	)
 
-	loop = asyncio.get_event_loop()
-
-	try:
-		loop.run_until_complete(
-			asyncio.wait([
-				tc.start()
-			])
-		)
-	except KeyboardInterrupt:
-		pass
-	finally:
-		loop.close()
+	tc.tweet(word_count())
+	
