@@ -11,15 +11,8 @@ from dotenv import load_dotenv
 from logger import Logger
 
 tz = datetime.timezone(datetime.timedelta(hours=9))
-docxpath = 'D:\sia\documents\Project\Project-Final-Report.docx'
 
-
-def word_count():
-	d = docx.Document(docxpath)
-	ps = d.paragraphs
-	count = sum(map(lambda p:len(p.text.split()), ps))
-	return count
-
+target = datetime.datetime(year=2021, month=10, day=1, hour=0)
 
 def twitter_setup():
 	# path to environment variables
@@ -46,17 +39,17 @@ class Twittermanager:
 		self.logger = Logger('Twittermanger') if logger is None else logger
 
 
-	def tweet(self, l):
+	def tweet(self):
 		"""
 		Super super driver a super driver!
 		"""
 		try:
-			self.twitter_api.UpdateProfile(name=f'課題文字数{l}/15000')
+			t = target - datetime.datetime.now()
+			self.twitter_api.UpdateProfile(name=f'しあまで{t.days}日！')
 			self.logger.info('Profile updated.')
 		except Exception as e:
 			self.logger.critical(e)
 			
-
 
 if __name__ == '__main__':
 	key, secret_key, token, secret_token = twitter_setup()
@@ -67,6 +60,4 @@ if __name__ == '__main__':
 		token,
 		secret_token
 	)
-
-	tc.tweet(word_count())
-	
+	print((target-datetime.datetime.now()).days)
